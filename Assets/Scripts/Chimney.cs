@@ -5,22 +5,21 @@ using UnityEngine;
 public class Chimney : MonoBehaviour
 {
     private BoxCollider2D chimney;
+
     void Awake() {
         chimney = GetComponent<BoxCollider2D>();
     }
-    // Start is called before the first frame update
-    void Start()
-    {
+
+    void Start() {
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("Gift hit the chimney");    
+        GameManager.Instance.GiftHitChimney();  
+        Destroy(other.gameObject);
     }
 }
