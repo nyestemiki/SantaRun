@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Santa : Singleton<Santa> {
-    private Vector3 giftSpawnPosition;
+public class CoverModel : MonoBehaviour {
     private float objectSpeed = 0.5f;
     private bool direction = true;
     private float altitudeDifference = 20f;
-
-    void Awake() {
-        giftSpawnPosition = GameManager.Instance.GetGiftSpawnPosition();
-    }
 
     void Update() {
         if (direction) {
@@ -27,13 +22,6 @@ public class Santa : Singleton<Santa> {
         if (altitudeDifference > 20f) {
             direction = true;
         }
-
-        if (Input.GetMouseButtonDown(0)) {
-            GameObject[] gifts = GameManager.Instance.GetGifts();
-            GameObject gift = gifts[0]; // Randomize
-            Vector3 position = giftSpawnPosition;
-            
-            Instantiate(gift, position, Quaternion.identity);
-        }
     }
+
 }
