@@ -67,7 +67,7 @@ public class GameManager : Singleton<GameManager> {
     private void Boost() {
         if (timeFromLastBooster > 15f) {
             if (Random.Range(0, 10) % 3 == 0) {
-                Instantiate(booster, new Vector3(3.33f, -3.33f, -55f), Quaternion.identity);
+                Instantiate(booster, new Vector3(3.33f, -2.8f, -55f), Quaternion.identity);
                 timeFromLastBooster = 0;
             }
         }
@@ -103,7 +103,7 @@ public class GameManager : Singleton<GameManager> {
 
         Vector3 position = new Vector3(
             houseSpawnPosition[0] + width/2,
-            houseSpawnPosition[1] + height/2.9f,
+            houseSpawnPosition[1] + height/2f - .5f,
             houseSpawnPosition[2]
         );
 
