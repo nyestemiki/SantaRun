@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] private GameObject[] gifts; 
     [SerializeField] private GameObject backGround;
     [SerializeField] private GameObject pavement;
+    [SerializeField] private GameObject booster;
     [SerializeField] private float[] giftSpawnPosition;
     [SerializeField] private float[] houseSpawnPosition;
     [SerializeField] private float[] backgroundSpawnPosition;
@@ -23,6 +24,8 @@ public class GameManager : Singleton<GameManager> {
     private int giftHitChimney;
     private AudioSource audioSource;
     private bool gameover = false;
+
+    private float timeFromLastBooster = 0f;
 
     void Awake() {
         giftHitChimney = 0;
@@ -48,6 +51,9 @@ public class GameManager : Singleton<GameManager> {
 
         time -= Time.deltaTime;
         timerDisplay.text = (Mathf.FloorToInt(time)).ToString();
+
+        timeFromLastBooster += Time.deltaTime;
+        Boost();
     }
 
     public void restart() {
@@ -57,6 +63,15 @@ public class GameManager : Singleton<GameManager> {
         SceneManager.LoadScene("Game");
         Destroy(this.gameObject);
     }
+
+    private void Boost() {
+        if (timeFromLastBooster > 15f) {
+            if (Random.Range(0, 10) % 3 == 0) {
+                Instantiate(booster, new Vector3(3.33f, -3.33f, -55f), Quaternion.identity);
+                timeFromLastBooster = 0;
+            }
+        }
+    } 
 
     public GameObject[] GetGifts() {
         return gifts;
@@ -83,10 +98,11 @@ public class GameManager : Singleton<GameManager> {
     }
 
     public Vector3 GetHouseSpawnPosition(GameObject house) {
+        float width = house.GetComponent<SpriteRenderer>().bounds.size.x;
         float height = house.GetComponent<SpriteRenderer>().bounds.size.y;
 
         Vector3 position = new Vector3(
-            houseSpawnPosition[0],
+            houseSpawnPosition[0] + width/2,
             houseSpawnPosition[1] + height/2.9f,
             houseSpawnPosition[2]
         );
@@ -131,7 +147,7 @@ public class GameManager : Singleton<GameManager> {
 
     public void SpawnNewPavement() {
         float width = pavement.GetComponent<SpriteRenderer>().bounds.size.x;
-        Vector3 position = new Vector3(endOfScreen + width/2 - 0.1f, -4.6f, -10f);
+        Vector3 position = new Vector3(endOfScreen + width/2 - 0.1f, -4.6f, -4f);
         Instantiate(pavement, position, Quaternion.identity);
     }
 
@@ -147,6 +163,10 @@ public class GameManager : Singleton<GameManager> {
 
     public int getHits() {
         return giftHitChimney;
+    }
+
+    public void ActivateBooster() {
+        time += 10f;
     }
 
 }

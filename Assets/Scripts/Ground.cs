@@ -6,7 +6,6 @@ public class Ground : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         GameManager.Instance.GiftHitGround();  
-        Destroy(other.gameObject);
     }
 
 }
