@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Booster : MonoBehaviour {
-    private float speed = 3f;
+    private float speed = 4.5f;
 
     void Update() {
         transform.Translate(Vector3.left * (speed * Time.deltaTime));    
