@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] private GameObject[] houses;
     [SerializeField] private GameObject[] gifts; 
     [SerializeField] private GameObject backGround;
+    [SerializeField] private GameObject pavement;
     [SerializeField] private float[] giftSpawnPosition;
     [SerializeField] private float[] houseSpawnPosition;
     [SerializeField] private float[] backgroundSpawnPosition;
@@ -17,9 +18,9 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField] float endOfScreen;
     [SerializeField] private AudioClip beep;
     [SerializeField] private AudioClip deepBeep;
+    [SerializeField] private float time = 60f; // 1 minute
 
     private int giftHitChimney;
-    private float time = 60f; // 1 minute
     private AudioSource audioSource;
     private bool gameover = false;
 
@@ -80,6 +81,18 @@ public class GameManager : Singleton<GameManager> {
 
         return position;
     }
+
+    public Vector3 GetHouseSpawnPosition(GameObject house) {
+        float height = house.GetComponent<SpriteRenderer>().bounds.size.y;
+
+        Vector3 position = new Vector3(
+            houseSpawnPosition[0],
+            houseSpawnPosition[1] + height/2.9f,
+            houseSpawnPosition[2]
+        );
+
+        return position;
+    }
     
     public Vector3 GetBackgroundSpawnPosition() {
         Vector3 position = new Vector3(
@@ -112,8 +125,14 @@ public class GameManager : Singleton<GameManager> {
     public void SpawnNewHouse() {
         int randomHouseId = Random.Range(0, houses.Length);
         GameObject randomHouse = houses[randomHouseId]; 
-        Vector3 position = GetHouseSpawnPosition();
+        Vector3 position = GetHouseSpawnPosition(randomHouse);
         Instantiate(randomHouse, position, Quaternion.identity);
+    }
+
+    public void SpawnNewPavement() {
+        float width = pavement.GetComponent<SpriteRenderer>().bounds.size.x;
+        Vector3 position = new Vector3(endOfScreen + width/2 - 0.1f, -4.6f, -10f);
+        Instantiate(pavement, position, Quaternion.identity);
     }
 
     public void GiftHitGround() {

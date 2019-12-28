@@ -11,11 +11,7 @@ public class Over : MonoBehaviour {
     void Start() {
         int hits = GameManager.Instance.getHits();
 
-        if (hits < 0) {
-            message.text = "You failed way too many gifts... :(";
-        } else {
-            message.text = hits.ToString() + " gifts delivered :)";
-        }
+        message.text = hits.ToString();
     }
 
     public void newGame() {

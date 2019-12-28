@@ -30,7 +30,8 @@ public class Santa : Singleton<Santa> {
 
         if (Input.GetMouseButtonDown(0)) {
             GameObject[] gifts = GameManager.Instance.GetGifts();
-            GameObject gift = gifts[0]; // Randomize
+            int randomGiftId = Random.Range(0, gifts.Length);
+            GameObject gift = gifts[randomGiftId]; 
             Vector3 position = giftSpawnPosition;
             
             Instantiate(gift, position, Quaternion.identity);
